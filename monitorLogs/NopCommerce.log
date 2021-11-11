@@ -1,0 +1,66 @@
+[INFO ] [2021-10-31 10:13:56,450] Pre-Condition - Step 01: Open browser 'Chrome'and navigate to'https://demo.nopcommerce.com/'
+[INFO ] [2021-10-31 10:13:59,324] User 01_Register - Step 01: Click to Register Link 
+[INFO ] [2021-10-31 10:13:59,911] User 01_Register - Step 02: Click to Gender Radio Button 
+[INFO ] [2021-10-31 10:13:59,985] User 01_Register - Step 03: Input to First Name textbox:Abner
+[INFO ] [2021-10-31 10:14:00,087] User 01_Register - Step 04: Input to Last Name textbox:Siba
+[INFO ] [2021-10-31 10:14:00,172] User 01_Register - Step 05: Input to Email textbox:darken2366@gmail.com
+[INFO ] [2021-10-31 10:14:00,266] User 01_Register - Step 06: Input to Password textbox:123123
+[INFO ] [2021-10-31 10:14:00,355] User 01_Register - Step 07: Input to Confirm Password textbox:123123
+[INFO ] [2021-10-31 10:14:00,457] User 01_Register - Step 08: Click on Register button
+[INFO ] [2021-10-31 10:14:01,948] User 01_Register - Step 09: verify register successfully
+[INFO ] [2021-10-31 10:14:01,996]  -------------------------- PASSED -------------------------- 
+[INFO ] [2021-10-31 10:14:01,997] User 01_Register - Step 10: Click on Logout button
+[INFO ] [2021-10-31 10:14:03,641] User 02_Login - Step 01: Click on Login Link
+[INFO ] [2021-10-31 10:14:04,816] User 02_Login - Step 02: Input to Email textbox:darken2366@gmail.com
+[INFO ] [2021-10-31 10:14:04,891] User 02_Login - Step 03: Input to Password textbox:123123
+[INFO ] [2021-10-31 10:14:04,964] User 02_Login - Step 04: Click on Login button
+[INFO ] [2021-10-31 10:14:06,486] User 01_Register - Step 09: verify login successfully
+[INFO ] [2021-10-31 10:14:06,540]  -------------------------- PASSED -------------------------- 
+[INFO ] [2021-10-31 10:14:06,542] Post-Condition: Close browser
+[INFO ] [2021-11-02 15:27:57,278] Pre-Condition - Step 01: Open browser 'Chrome' and navigate to 'https://demo.nopcommerce.com/'
+[INFO ] [2021-11-02 15:28:00,665] User 01_Register - Step 01: Click to 'Register' Link 
+[INFO ] [2021-11-02 15:28:02,271] User 01_Register - Step 02: Click to Gender Radio Button 
+[INFO ] [2021-11-02 15:28:02,343] User 01_Register - Step 03: Input to 'First Name' textbox:Abner
+[INFO ] [2021-11-02 15:28:02,447] User 01_Register - Step 04: Input to 'Last Name' textbox:Siba
+[INFO ] [2021-11-02 15:28:02,531] User 01_Register - Step 05: Input to 'Email textbox':darken4831@gmail.com
+[INFO ] [2021-11-02 15:28:02,626] User 01_Register - Step 06: Input to 'Password' textbox:123123
+[INFO ] [2021-11-02 15:28:02,714] User 01_Register - Step 07: Input to 'Confirm Password' textbox:123123
+[INFO ] [2021-11-02 15:28:02,807] User 01_Register - Step 08: Click on Register button
+[INFO ] [2021-11-02 15:28:05,469] User 01_Register - Step 09: Verify register successfully
+[INFO ] [2021-11-02 15:28:05,514]  -------------------------- PASSED -------------------------- 
+[INFO ] [2021-11-02 15:28:05,514] User 01_Register - Step 10: Click on 'Logout' button
+[INFO ] [2021-11-02 15:28:07,984] User 02_Login - Step 01: Click on 'Login' Link
+[INFO ] [2021-11-02 15:28:09,317] User 02_Login - Step 02: Input to 'Email' textbox:darken4831@gmail.com
+[INFO ] [2021-11-02 15:28:09,402] User 02_Login - Step 03: Input to 'Password' textbox:123123
+[INFO ] [2021-11-02 15:28:09,482] User 02_Login - Step 04: Click on 'Login' button
+[INFO ] [2021-11-02 15:28:11,049] User 02_Login - Step 09: verify login successfully
+[INFO ] [2021-11-02 15:28:11,113]  -------------------------- PASSED -------------------------- 
+[INFO ] [2021-11-02 15:28:11,115] Post-Condition: Close browser
+[INFO ] [2021-11-02 16:08:48,143]  -------------------------- PASSED -------------------------- 
+[INFO ] [2021-11-02 16:08:51,717]  -------------------------- PASSED -------------------------- 
+[INFO ] [2021-11-02 16:09:20,036]  -------------------------- PASSED -------------------------- 
+[INFO ] [2021-11-02 16:09:25,498]  -------------------------- FAILED -------------------------- 
+[INFO ] [2021-11-02 16:10:32,161]  -------------------------- PASSED -------------------------- 
+[INFO ] [2021-11-02 16:10:37,097]  -------------------------- FAILED -------------------------- 
+[INFO ] [2021-11-02 16:14:25,626]  -------------------------- PASSED -------------------------- 
+[INFO ] [2021-11-02 16:14:31,418]  -------------------------- FAILED -------------------------- 
+[INFO ] [2021-11-03 10:24:24,908] OS name = windows 10
+[INFO ] [2021-11-03 10:24:24,909] Driver instance name = windows 10
+[INFO ] [2021-11-03 11:00:49,873] OS name = windows 10
+[INFO ] [2021-11-03 11:00:49,875] Driver instance name = windows 10
+[INFO ] [2021-11-04 10:31:37,955]  -------------------------- PASSED -------------------------- 
+[INFO ] [2021-11-04 10:31:42,021]  -------------------------- FAILED -------------------------- 
+[INFO ] [2021-11-04 10:31:42,334] OS name = windows 10
+[INFO ] [2021-11-04 10:31:42,334] Driver instance name = windows 10
+[INFO ] [2021-11-04 10:32:34,804]  -------------------------- PASSED -------------------------- 
+[INFO ] [2021-11-04 10:32:40,429]  -------------------------- PASSED -------------------------- 
+[INFO ] [2021-11-04 10:32:40,431] OS name = windows 10
+[INFO ] [2021-11-04 10:32:40,431] Driver instance name = windows 10
+[INFO ] [2021-11-04 16:54:13,571]  -------------------------- PASSED -------------------------- 
+[INFO ] [2021-11-04 16:54:17,054]  -------------------------- PASSED -------------------------- 
+[INFO ] [2021-11-04 16:54:17,056] OS name = windows 10
+[INFO ] [2021-11-04 16:54:17,056] Driver instance name = windows 10
+[INFO ] [2021-11-04 16:56:14,060]  -------------------------- PASSED -------------------------- 
+[INFO ] [2021-11-04 16:56:17,904]  -------------------------- PASSED -------------------------- 
+[INFO ] [2021-11-04 16:56:17,905] OS name = windows 10
+[INFO ] [2021-11-04 16:56:17,905] Driver instance name = windows 10
