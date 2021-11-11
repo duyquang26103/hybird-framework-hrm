@@ -8,7 +8,6 @@
 	</listeners>
 	<test name="run on Chrome">
 		<parameter name="browser" value="Chrome" />
-
 		<classes>
 			<class name="com.hrm.employee.Employee_HRM" />
 		</classes>
