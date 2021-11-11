@@ -30,7 +30,7 @@ public class Employee_HRM extends BaseTest {
 		empUserName = RandomEmail();
 		empPassword = "QAautomation@";
 		firstName = "Draken";
-		lastName = "Shiliki";
+		lastName = "Edogawa";
 		driver = getDriverBrowsers(browserName, appUrl);
 		loginPage = PageGeneratorManager.getLoginPage(driver);
 		
