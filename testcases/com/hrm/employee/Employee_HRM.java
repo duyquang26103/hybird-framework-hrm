@@ -11,6 +11,7 @@ import org.testng.annotations.Test;
 import com.relevantcodes.extentreports.LogStatus;
 
 import commons.BaseTest;
+import commons.GlobalConstants;
 import pageObjects.hrm.AddEmpPO;
 import pageObjects.hrm.DashBoardPO;
 import pageObjects.hrm.EmpInfoPO;
@@ -22,6 +23,7 @@ import reportConfig.ExtentTestManager;
 public class Employee_HRM extends BaseTest {
 	WebDriver driver;
 	String adminUsername, adminPassword,empUserName, empPassword, firstName,lastName;
+	String avatarFilePath = GlobalConstants.UPLOAD_FOLDER_PATH + "Image_avatar.jpg";
 	@Parameters({ "browser", "url" })
 	@BeforeClass
 	public void beforeClass(String browserName, String appUrl) {
@@ -90,7 +92,36 @@ public class Employee_HRM extends BaseTest {
 		
 		ExtentTestManager.getTest().log(LogStatus.INFO, "01_Add_New_Employee - Step 15: Verify Last Name in Table: "+ lastName);
 		verifyEquals(empListPage.getValueByTableIdAndColumnNameAndRowIndex(driver, "resultTable", "Last Name", "1"), lastName);
-
+		
+		ExtentTestManager.getTest().log(LogStatus.INFO, "01_Add_New_Employee - Step 16: Logout from the system");
+		loginPage = empListPage.logoutFromTheSystem(driver,"Logout");
+		ExtentTestManager.endTest();
+	}
+	
+	@Test
+	public void TC_02_Upload_Employee(Method method) {
+		ExtentTestManager.startTest(method.getName(), "TC_01_Register_To_System");
+		ExtentTestManager.getTest().log(LogStatus.INFO, "02_Add_New_Employee - Step 01: Login with user name: "+empUserName +" and password "+empPassword);
+		dashBoardPage = loginPage.loginToTheSystem(driver, "txtUsername","txtPassword","btnLogin",empUserName,empPassword);
+		
+		ExtentTestManager.getTest().log(LogStatus.INFO, "02_Add_New_Employee - Step 02: Open Menu Header: 'My Info'");
+		dashBoardPage.clickOnMenuByName(driver, "My Info");
+		empInfoPage = PageGeneratorManager.getEmpInfoPage(driver);
+		
+		ExtentTestManager.getTest().log(LogStatus.INFO, "02_Add_New_Employee - Step 03: Click on image link to change photo");
+		empInfoPage.clickOnImageLink();
+		
+		ExtentTestManager.getTest().log(LogStatus.INFO, "02_Add_New_Employee - Step 04: Upload new Avatar image");
+		empInfoPage.uploadImage(driver, avatarFilePath);
+		
+		ExtentTestManager.getTest().log(LogStatus.INFO, "02_Add_New_Employee - Step 05: Click on Upload Button");
+		empInfoPage.clickOnButtonByID(driver, "btnSave");
+		
+		ExtentTestManager.getTest().log(LogStatus.INFO, "02_Add_New_Employee - Step 06: Verify success message upload is displayed");
+		verifyTrue(empInfoPage.isUploadAvatarSuccessMessageDisplayed());
+		
+		ExtentTestManager.getTest().log(LogStatus.INFO, "02_Add_New_Employee - Step 06: Verify new Avatar image is displayed");
+		verifyTrue(empInfoPage.isNewAvatarImageDisplayed());
 		ExtentTestManager.endTest();
 	}
 	

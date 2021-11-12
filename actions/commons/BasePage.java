@@ -19,6 +19,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import pageObjects.hrm.DashBoardPO;
+import pageObjects.hrm.LoginPO;
 import pageObjects.hrm.PageGeneratorManager;
 import pageUIs.BasePageUI;
 
@@ -475,14 +476,26 @@ public class BasePage {
 		selectItemInDefaultDropdownByText(driver, BasePageUI.SELECT_DROPDOWN_BY_ID, value, dropDownID);
 	}
 
-	public DashBoardPO loginToTheSystem(WebDriver driver, String userNameID, String passwordID, String buttonID,
-			String userName, String password) {
+	public DashBoardPO loginToTheSystem(WebDriver driver, String userNameID, String passwordID, String buttonID,String userName, String password) {
 		waitForElementVisible(driver, BasePageUI.INPUT_TEXTBOX_BY_ID, userNameID);
 		sendKeyToElement(driver, BasePageUI.INPUT_TEXTBOX_BY_ID, userName, userNameID);
 		waitForElementVisible(driver, BasePageUI.INPUT_TEXTBOX_BY_ID, passwordID);
 		sendKeyToElement(driver, BasePageUI.INPUT_TEXTBOX_BY_ID, password, passwordID);
 		clickToElement(driver, BasePageUI.BUTTON_BY_ID, buttonID);
 		return PageGeneratorManager.getDashBoardPage(driver);
+	}
+	
+	public LoginPO logoutFromTheSystem(WebDriver driver, String subWelComeName) {
+		waitForElementVisible(driver, BasePageUI.WELCOME_ACCOUNT);
+		clickToElement(driver, BasePageUI.WELCOME_ACCOUNT);
+		waitForElementVisible(driver, BasePageUI.WELCOME_ACCOUNT_SUB_TITLE_BY_NAME, subWelComeName);
+		clickToElement(driver, BasePageUI.WELCOME_ACCOUNT_SUB_TITLE_BY_NAME, subWelComeName);
+		return PageGeneratorManager.getLoginPage(driver);
+	}
+	
+	public void clickOnMenuByName(WebDriver driver, String menuName) {
+		waitForElementVisible(driver, BasePageUI.MENU_BY_NAME, menuName);
+		clickToElement(driver, BasePageUI.MENU_BY_NAME, menuName);
 	}
 
 	public void clickOnMenuAndSubMenuByName(WebDriver driver, String menuName, String subMenuName) {
@@ -497,6 +510,11 @@ public class BasePage {
 		int columnIndex = getElementSize(driver, BasePageUI.TABLE_BY_ID_AND_ROW_HEADER_BY_NAME, tableID, headerName) + 1;
 		return getElementText(driver, BasePageUI.TABLE_BY_ID_AND_ROW_BY_INDEX_COLUMN_BY_INDEX, tableID,rowIndex,String.valueOf(columnIndex));
 	}
+	
+	public void uploadImage(WebDriver driver, String filePath) {
+		getWebElement(driver, BasePageUI.UPLOAD_FILE).sendKeys(filePath);;
+	}
+
 	
 
 	public List<Integer> addElementToList(WebDriver driver, String listItem) {
