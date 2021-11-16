@@ -19,20 +19,24 @@ import pageObjects.hrm.EmpListPO;
 import pageObjects.hrm.LoginPO;
 import pageObjects.hrm.PageGeneratorManager;
 import reportConfig.ExtentTestManager;
+import utilities.DataUtil;
 
 public class Employee_HRM extends BaseTest {
 	WebDriver driver;
-	String adminUsername, adminPassword,empUserName, empPassword, firstName,lastName;
+	String adminUsername, adminPassword,empUserName, empPassword, firstName,lastName, fullName;
 	String avatarFilePath = GlobalConstants.UPLOAD_FOLDER_PATH + "Image_avatar.jpg";
 	@Parameters({ "browser", "url" })
 	@BeforeClass
 	public void beforeClass(String browserName, String appUrl) {
+		fakeData = DataUtil.getData();
+		
 		adminUsername = "Admin";
 		adminPassword = "admin123";
-		empUserName = RandomEmail();
-		empPassword = "QAautomation@";
-		firstName = "Draken";
-		lastName = "Edogawa";
+		empUserName = fakeData.getEmailAddress();
+		empPassword = fakeData.getPassword();
+		firstName = fakeData.getFirstName();
+		lastName = fakeData.getLastName();
+		fullName = firstName +" " + lastName;
 		driver = getDriverBrowsers(browserName, appUrl);
 		loginPage = PageGeneratorManager.getLoginPage(driver);
 		
@@ -81,7 +85,7 @@ public class Employee_HRM extends BaseTest {
 		
 		ExtentTestManager.getTest().log(LogStatus.INFO, "01_Add_New_Employee - Step 12: Input to Employee Name: "+  firstName);
 		empListPage.isJQueryAjaxLoadedSuccess(driver);
-		empListPage.inputTextBoxByID(driver, firstName, "empsearch_employee_name_empName");
+		empListPage.inputTextBoxByID(driver, fullName, "empsearch_employee_name_empName");
 		empListPage.isJQueryAjaxLoadedSuccess(driver);
 		
 		ExtentTestManager.getTest().log(LogStatus.INFO, "01_Add_New_Employee - Step 13: Click to 'Search' Button");
@@ -135,5 +139,6 @@ public class Employee_HRM extends BaseTest {
 	EmpInfoPO empInfoPage;
 	DashBoardPO dashBoardPage;
 	AddEmpPO addEmpPage;
+	DataUtil fakeData;
 
 }
