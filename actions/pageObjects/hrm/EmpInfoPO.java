@@ -18,16 +18,16 @@ public class EmpInfoPO extends BasePage{
 		
 	}
 
-	public boolean isUploadAvatarSuccessMessageDisplayed() {
-		waitForElementVisible(driver, EmpInfoPageUI.UPLOAD_AVATAR_SUCCESS_MESSAGE);
-		return isControlDisplayed(driver, EmpInfoPageUI.UPLOAD_AVATAR_SUCCESS_MESSAGE);
-	}
-
 	public boolean isNewAvatarImageDisplayed() {
 		waitForElementClickable(driver, EmpInfoPageUI.IMAGE_LINK);
 		int widthImage = Integer.parseInt(getAttributeValue(driver, EmpInfoPageUI.IMAGE_LINK, "width"));
 		int heighImage = Integer.parseInt(getAttributeValue(driver, EmpInfoPageUI.IMAGE_LINK, "height"));
 		return (heighImage != 200) || (widthImage != 200);
+	}
+	
+	public void openInfoMenuByName(String menuName) {
+		waitForElementVisible(driver, EmpInfoPageUI.MENU_BY_NAME, menuName);
+		clickToElement(driver, EmpInfoPageUI.MENU_BY_NAME,menuName);
 	}
 	
 

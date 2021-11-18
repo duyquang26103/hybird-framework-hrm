@@ -22,6 +22,7 @@ import pageObjects.hrm.DashBoardPO;
 import pageObjects.hrm.LoginPO;
 import pageObjects.hrm.PageGeneratorManager;
 import pageUIs.BasePageUI;
+import pageUIs.EmpInfoPageUI;
 
 public class BasePage {
 
@@ -190,6 +191,11 @@ public class BasePage {
 		Select select = new Select(getWebElement(driver, xpathlocator));
 		return select.getFirstSelectedOption().getText();
 	}
+	
+	public String getSelectItemDefaultDropdown(WebDriver driver, String xpathlocator,String...params) {
+		Select select = new Select(getWebElement(driver, getDymamicLocator(xpathlocator, params)));
+		return select.getFirstSelectedOption().getText();
+	}
 
 	public boolean isDropdownMutiple(WebDriver driver, String xpathlocator) {
 		Select select = new Select(getWebElement(driver, xpathlocator));
@@ -219,6 +225,10 @@ public class BasePage {
 
 	public String getAttributeValue(WebDriver driver, String xpathlocator, String attributeName) {
 		return getWebElement(driver, xpathlocator).getAttribute(attributeName);
+	}
+	
+	public String getAttributeValue(WebDriver driver, String xpathlocator, String attributeName, String...params) {
+		return getWebElement(driver, getDymamicLocator(xpathlocator, params)).getAttribute(attributeName);
 	}
 
 	public String getCssValue(WebDriver driver, String xpathlocator, String propertyName) {
@@ -258,6 +268,10 @@ public class BasePage {
 	public boolean isControlDisplayed(WebDriver driver, String xpathlocator, String... params) {
 		return getWebElement(driver, getDymamicLocator(xpathlocator, params)).isDisplayed();
 	}
+	
+	public boolean isControlEnabled(WebDriver driver, String xpathlocator, String... params) {
+		return getWebElement(driver, getDymamicLocator(xpathlocator, params)).isEnabled();
+	}
 
 	public boolean isControlUnDisplayed(WebDriver driver, String xpathlocator) {
 		overrideGlobalTime(driver, shortTimeout);
@@ -278,6 +292,10 @@ public class BasePage {
 
 	public boolean isControlSelected(WebDriver driver, String xpathlocator) {
 		return getWebElement(driver, xpathlocator).isSelected();
+	}
+	
+	public boolean isControlSelected(WebDriver driver, String xpathlocator, String...params) {
+		return getWebElement(driver, getDymamicLocator(xpathlocator, params)).isSelected();
 	}
 
 	public boolean isControlEnabled(WebDriver driver, String xpathlocator) {
@@ -465,15 +483,60 @@ public class BasePage {
 		waitForElementVisible(driver, BasePageUI.INPUT_TEXTBOX_BY_ID, idName);
 		sendKeyToElement(driver, BasePageUI.INPUT_TEXTBOX_BY_ID, value, idName);
 	}
-
+	
+	public boolean isTextBoxByIDEnabled(WebDriver driver, String idName) {
+		waitForElementVisible(driver, BasePageUI.INPUT_TEXTBOX_BY_ID, idName);
+		return isControlEnabled(driver, BasePageUI.INPUT_TEXTBOX_BY_ID, idName);
+	}
+	
+	public boolean isRadioButtonByIDEnabled(WebDriver driver, String idName) {
+		waitForElementVisible(driver, BasePageUI.RADIO_BUTTON_BY_ID, idName);
+		return isControlEnabled(driver, BasePageUI.RADIO_BUTTON_BY_ID, idName);
+	}
+	
+	public boolean isSelectDropdownByIDEnabled(WebDriver driver, String idName) {
+		waitForElementVisible(driver, BasePageUI.SELECT_DROPDOWN_BY_ID, idName);
+		return isControlEnabled(driver, BasePageUI.SELECT_DROPDOWN_BY_ID, idName);
+	}
+	
+	public boolean isSelectCheckboxByIDEnabled(WebDriver driver, String idName) {
+		waitForElementVisible(driver, BasePageUI.INPUT_CHECKBOX_BY_ID, idName);
+		return isControlEnabled(driver, BasePageUI.INPUT_CHECKBOX_BY_ID, idName);
+	}
+	
+	public String getValueTextBoxByID(WebDriver driver, String idName, String value) {
+		waitForElementVisible(driver, BasePageUI.INPUT_TEXTBOX_BY_ID, idName);
+		return getAttributeValue(driver, BasePageUI.INPUT_TEXTBOX_BY_ID,value, idName) ;
+	}
+	
+	public String getValueSelectedDropdownByID(WebDriver driver, String idName) {
+		waitForElementVisible(driver, BasePageUI.SELECT_DROPDOWN_BY_ID, idName);
+		return getSelectItemDefaultDropdown(driver, BasePageUI.SELECT_DROPDOWN_BY_ID, idName) ;
+	}
+	
 	public void clickOnButtonByID(WebDriver driver, String buttonName) {
 		waitForElementVisible(driver, BasePageUI.BUTTON_BY_ID, buttonName);
 		clickToElement(driver, BasePageUI.BUTTON_BY_ID, buttonName);
+	}
+	
+	public void clickOnRadioButtonByID(WebDriver driver, String buttonName) {
+		waitForElementVisible(driver, BasePageUI.RADIO_BUTTON_BY_ID, buttonName);
+		clickToElement(driver, BasePageUI.RADIO_BUTTON_BY_ID, buttonName);
 	}
 
 	public void selectDropdownByIDAndText(WebDriver driver, String dropDownID, String value) {
 		waitForElementVisible(driver, BasePageUI.SELECT_DROPDOWN_BY_ID, dropDownID);
 		selectItemInDefaultDropdownByText(driver, BasePageUI.SELECT_DROPDOWN_BY_ID, value, dropDownID);
+	}
+	
+	public boolean isSuccessMessageDisplayed(WebDriver driver, String textName) {
+		waitForElementVisible(driver, BasePageUI.SUCCESS_MESSAGE_BY_TEXT,textName);
+		return isControlDisplayed(driver, BasePageUI.SUCCESS_MESSAGE_BY_TEXT, textName);
+	}
+	
+	public boolean isRadioButtonSelectedByID(WebDriver driver, String idName) {
+		waitForElementVisible(driver, BasePageUI.RADIO_BUTTON_BY_ID,idName);
+		return isControlSelected(driver, BasePageUI.RADIO_BUTTON_BY_ID, idName);
 	}
 
 	public DashBoardPO loginToTheSystem(WebDriver driver, String userNameID, String passwordID, String buttonID,String userName, String password) {
