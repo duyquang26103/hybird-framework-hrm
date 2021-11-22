@@ -3,6 +3,7 @@ package pageObjects.hrm;
 import org.openqa.selenium.WebDriver;
 
 import commons.BasePage;
+import pageUIs.BasePageUI;
 import pageUIs.EmpInfoPageUI;
 
 public class EmpInfoPO extends BasePage{
@@ -29,6 +30,13 @@ public class EmpInfoPO extends BasePage{
 		waitForElementVisible(driver, EmpInfoPageUI.MENU_BY_NAME, menuName);
 		clickToElement(driver, EmpInfoPageUI.MENU_BY_NAME,menuName);
 	}
+	
+	public String getValueByTableIdAndColumnNameAndRowIndexOfFirstColumn(String tableID, String headerName, String rowIndex) {
+		waitForElementVisible(driver, EmpInfoPageUI.TABLE_BY_ID_AND_ROW_HEADER_BY_NAME, tableID, headerName);
+		int columnIndex = getElementSize(driver, EmpInfoPageUI.TABLE_BY_ID_AND_ROW_HEADER_BY_NAME, tableID, headerName);
+		return getElementText(driver, EmpInfoPageUI.TABLE_BY_ID_AND_ROW_BY_INDEX_COLUMN_BY_INDEX, tableID,rowIndex,String.valueOf(columnIndex));
+	}
+
 	
 
 }

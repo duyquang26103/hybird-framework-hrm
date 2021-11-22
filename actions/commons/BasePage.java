@@ -9,6 +9,7 @@ import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -314,6 +315,12 @@ public class BasePage {
 		Actions action = new Actions(driver);
 		action.moveToElement(getWebElement(driver, xpathlocator)).perform();
 	}
+	
+	public void enterPush(WebDriver driver) {
+		Actions action = new Actions(driver);
+		action.keyDown(Keys.ENTER).perform();
+		action.keyUp(Keys.ENTER).perform();
+	}
 
 	public Object executeForBrowser(WebDriver driver, String javaScript) {
 		JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
@@ -572,6 +579,18 @@ public class BasePage {
 		waitForElementVisible(driver, BasePageUI.TABLE_BY_ID_AND_ROW_HEADER_BY_NAME, tableID, headerName);
 		int columnIndex = getElementSize(driver, BasePageUI.TABLE_BY_ID_AND_ROW_HEADER_BY_NAME, tableID, headerName) + 1;
 		return getElementText(driver, BasePageUI.TABLE_BY_ID_AND_ROW_BY_INDEX_COLUMN_BY_INDEX, tableID,rowIndex,String.valueOf(columnIndex));
+	}
+	
+	public String getValueByTableIdAndColumnNameAndRowIndexNoHeader(WebDriver driver, String tableID, String headerName, String rowIndex) {
+		waitForElementVisible(driver, BasePageUI.TABLE_BY_ID_AND_ROW_HEADER_BY_NAME, tableID, headerName);
+		int columnIndex = getElementSize(driver, BasePageUI.TABLE_BY_ID_AND_ROW_HEADER_BY_NAME, tableID, headerName);
+		return getElementText(driver, BasePageUI.TABLE_BY_ID_AND_ROW_BY_INDEX_COLUMN_BY_INDEX, tableID,rowIndex,String.valueOf(columnIndex));
+	}
+	
+	public void clickValueByTableIdAndColumnNameAndRowIndex(WebDriver driver, String tableID, String headerName, String rowIndex) {
+		waitForElementVisible(driver, BasePageUI.TABLE_BY_ID_AND_ROW_HEADER_BY_NAME, tableID, headerName);
+		int columnIndex = getElementSize(driver, BasePageUI.TABLE_BY_ID_AND_ROW_HEADER_BY_NAME, tableID, headerName) + 1;
+		clickToElement(driver, BasePageUI.TABLE_TO_CLICK_BY_ID_AND_ROW_BY_INDEX_COLUMN_BY_INDEX, tableID, rowIndex,String.valueOf(columnIndex));
 	}
 	
 	public void uploadImage(WebDriver driver, String filePath) {

@@ -2,6 +2,7 @@ package commons;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
@@ -9,6 +10,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
@@ -32,9 +34,11 @@ public class BaseTest {
 		
 		BROWSER browser = BROWSER.valueOf(browserName.toUpperCase());
 		if (browser == BROWSER.CHROME) {
-			System.setProperty("webdriver.chrome.driver",
-					projectPath + getFlash("browserDrivers") + "chromedriver.exe");
-			driver = new ChromeDriver();
+			System.setProperty("webdriver.chrome.driver",projectPath + getFlash("browserDrivers") + "chromedriver.exe");
+			ChromeOptions options = new ChromeOptions();
+			options.setExperimentalOption("useAutomationExtension", false);
+			options.setExperimentalOption("excludeSwitches",Collections.singletonList("enable-automation"));
+			driver = new ChromeDriver(options);
 		} else if (browser == BROWSER.EDGE) {
 			System.setProperty("webdriver.edge.driver", projectPath + getFlash("browserDrivers") + "msedgedriver.exe");
 			driver = new EdgeDriver();

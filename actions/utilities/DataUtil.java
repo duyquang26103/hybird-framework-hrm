@@ -29,8 +29,36 @@ public class DataUtil {
 		return faker.internet().emailAddress();
 	}
 	
+	public String getStateAddress() {
+		return faker.address().country();
+	}
+	
+	public String getCityAddress() {
+		return faker.address().cityName();
+	}
+	
+	public String getStreetAddress() {
+		return faker.address().streetAddress();
+	}
+	
+	public String getPostalCode() {
+		return faker.address().zipCode();
+	}
+	
+	public String getPhoneNumber() {
+		return faker.phoneNumber().cellPhone();
+	}
+	
+	public String getHomePhoneNumber() {
+		return faker.phoneNumber().phoneNumber();
+	}
+	
 	public String getPassword() {
 		return faker.internet().password();
+	}
+	
+	public String getRelationship() {
+		return faker.relationships().any();
 	}
 
 }
