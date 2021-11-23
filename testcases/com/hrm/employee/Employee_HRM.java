@@ -25,7 +25,7 @@ public class Employee_HRM extends BaseTest {
 	WebDriver driver;
 	String adminUsername, adminPassword,empUserName, empPassword, firstName,lastName, fullName ,employeeID,editFirstName, editLastName,editFullName ;
 	String editStreetName01, editStreetName02, editCity,editState, editZipCode, editHomephone, editMobile, editWorkTelephone, editWorkEmail, editOtherEmail; 
-	String nameEmer, relationshipEmer, homeTeleEmer, mobileEmer, workTeleEmer, nameDepen, salaryComponent, amountSalary , exemptionNumber;
+	String nameEmer, relationshipEmer, homeTeleEmer, mobileEmer, workTeleEmer, nameDepen, salaryComponent, amountSalary , exemptionNumber, companyQuan, jobtitleQuan;
 	String avatarFilePath = GlobalConstants.UPLOAD_FOLDER_PATH + "Image_avatar.jpg";
 	@Parameters({ "browser", "url" })
 	@BeforeClass
@@ -67,6 +67,9 @@ public class Employee_HRM extends BaseTest {
 		amountSalary = "4" + String.valueOf(RandomInt());
 		
 		exemptionNumber = "12";
+		
+		companyQuan= "AFCA";
+		jobtitleQuan = "Auto Test";
 		
 		driver = getDriverBrowsers(browserName, appUrl);
 		loginPage = PageGeneratorManager.getLoginPage(driver);
@@ -445,7 +448,7 @@ public class Employee_HRM extends BaseTest {
 		empListPage.clickValueByTableIdAndColumnNameAndRowIndex(driver, "resultTable", "First (& Middle) Name", "1");
 		empInfoPage = PageGeneratorManager.getEmpInfoPage(driver);
 		
-		ExtentTestManager.getTest().log(LogStatus.INFO, "07_Edit_And_View_Job - Step 06: Open Dependent menu at My info Menu");
+		ExtentTestManager.getTest().log(LogStatus.INFO, "07_Edit_And_View_Job - Step 06: Open Job menu at My info Menu");
 		empInfoPage.openInfoMenuByName("Job");
 		
 		ExtentTestManager.getTest().log(LogStatus.INFO, "07_Edit_And_View_Job - Step 07: Verify all fields is disabled");
@@ -548,7 +551,7 @@ public class Employee_HRM extends BaseTest {
 		empListPage.clickValueByTableIdAndColumnNameAndRowIndex(driver, "resultTable", "First (& Middle) Name", "1");
 		empInfoPage = PageGeneratorManager.getEmpInfoPage(driver);
 		
-		ExtentTestManager.getTest().log(LogStatus.INFO, "08_Edit_And_View_Salary - Step 06: Open Dependent menu at My info Menu");
+		ExtentTestManager.getTest().log(LogStatus.INFO, "08_Edit_And_View_Salary - Step 06: Open Salary menu at My info Menu");
 		empInfoPage.openInfoMenuByName("Salary");
 		
 		ExtentTestManager.getTest().log(LogStatus.INFO, "08_Edit_And_View_Salary - Step 07: Click on Add button");
@@ -564,7 +567,7 @@ public class Employee_HRM extends BaseTest {
 		empInfoPage.selectDropdownByIDAndText(driver, "salary_payperiod_code", "Monthly");
 		
 		ExtentTestManager.getTest().log(LogStatus.INFO, "08_Edit_And_View_Salary - Step 11: Select Currency is: United States Dollar");
-		empInfoPage.selectDropdownByIDAndText(driver, "salary_currency_id", "United States Dollar");
+		empInfoPage.selectCurencyDropdownByName(driver,"United States Dollar");
 		
 		ExtentTestManager.getTest().log(LogStatus.INFO, "08_Edit_And_View_Salary - Step 12: Input amount is: " + amountSalary);
 		empInfoPage.inputTextBoxByID(driver, amountSalary, "salary_basic_salary");
@@ -627,7 +630,7 @@ public class Employee_HRM extends BaseTest {
 		empListPage.clickValueByTableIdAndColumnNameAndRowIndex(driver, "resultTable", "First (& Middle) Name", "1");
 		empInfoPage = PageGeneratorManager.getEmpInfoPage(driver);
 		
-		ExtentTestManager.getTest().log(LogStatus.INFO, "09_Tax_Exmptions - Step 06: Open Dependent menu at My info Menu");
+		ExtentTestManager.getTest().log(LogStatus.INFO, "09_Tax_Exmptions - Step 06: Open Tax Exemptions menu at My info Menu");
 		empInfoPage.openInfoMenuByName("Tax Exemptions");
 		
 		ExtentTestManager.getTest().log(LogStatus.INFO, "09_Tax_Exmptions - Step 07: Verify all fields is disabled");
@@ -679,12 +682,158 @@ public class Employee_HRM extends BaseTest {
 		dashBoardPage.clickOnMenuByName(driver, "My Info");
 		empInfoPage = PageGeneratorManager.getEmpInfoPage(driver);
 		
-		ExtentTestManager.getTest().log(LogStatus.INFO, "09_Tax_Exmptions - Step 17: Open Job menu at My info Menu");
+		ExtentTestManager.getTest().log(LogStatus.INFO, "09_Tax_Exmptions - Step 17: Open Tax Exemptions menu at My info Menu");
 		empInfoPage.openInfoMenuByName("Tax Exemptions");
+		
+		ExtentTestManager.getTest().log(LogStatus.INFO, "09_Tax_Exmptions - Step 18: Verify all fields is disabled");
+		verifyFalse(empInfoPage.isSelectDropdownByIDEnabled(driver, "tax_federalStatus"));
+		verifyFalse(empInfoPage.isTextBoxByIDEnabled(driver, "tax_federalExemptions"));
+		verifyFalse(empInfoPage.isSelectDropdownByIDEnabled(driver, "tax_state"));
+		verifyFalse(empInfoPage.isSelectDropdownByIDEnabled(driver, "tax_stateStatus"));
+		verifyFalse(empInfoPage.isTextBoxByIDEnabled(driver, "tax_stateExemptions"));
+		verifyFalse(empInfoPage.isSelectDropdownByIDEnabled(driver, "tax_unempState"));
+		verifyFalse(empInfoPage.isSelectDropdownByIDEnabled(driver, "tax_workState"));
+		
+		ExtentTestManager.getTest().log(LogStatus.INFO, "09_Tax_Exmptions - Step 19: Verify Status in Federal Income Tax: Single");
+		verifyEquals(empInfoPage.getValueSelectedDropdownByID(driver, "tax_federalStatus"), "Single");
+		
+		ExtentTestManager.getTest().log(LogStatus.INFO, "09_Tax_Exmptions - Step 20: Verify Exemptions in Federal Income Tax: " + exemptionNumber);
+		verifyEquals(empInfoPage.getValueTextBoxByID(driver, "tax_federalExemptions", "value"), exemptionNumber);
+		
+		ExtentTestManager.getTest().log(LogStatus.INFO, "09_Tax_Exmptions - Step 21: Verify State in  State Income Tax: Alabama");
+		verifyEquals(empInfoPage.getValueSelectedDropdownByID(driver, "tax_state"), "Alabama");
+		
+		ExtentTestManager.getTest().log(LogStatus.INFO, "09_Tax_Exmptions - Step 22: Verify Status in  State Income Tax: Married");
+		verifyEquals(empInfoPage.getValueSelectedDropdownByID(driver, "tax_stateStatus"), "Married");
+		
+		ExtentTestManager.getTest().log(LogStatus.INFO, "09_Tax_Exmptions - Step 23: Verify Exemptions in State Income Tax: " + exemptionNumber);
+		verifyEquals(empInfoPage.getValueTextBoxByID(driver, "tax_stateExemptions", "value"), exemptionNumber);
+		
+		ExtentTestManager.getTest().log(LogStatus.INFO, "09_Tax_Exmptions - Step 24: Verify Unemployment State in  State Income Tax: Alaska");
+		verifyEquals(empInfoPage.getValueSelectedDropdownByID(driver, "tax_unempState"), "Alaska");
+		
+		ExtentTestManager.getTest().log(LogStatus.INFO, "09_Tax_Exmptions - Step 25: Verify Work State in  State Income Tax: American Samoa");
+		verifyEquals(empInfoPage.getValueSelectedDropdownByID(driver, "tax_workState"), "American Samoa");
+		
+		ExtentTestManager.getTest().log(LogStatus.INFO, "09_Tax_Exmptions - Step 26: Logout from the system");
+		loginPage = empInfoPage.logoutFromTheSystem(driver, "Logout");
+		ExtentTestManager.endTest();
+	}
+	
+	@Test
+	public void TC_10_Edit_And_View_Qualifications(Method method) {	
+		ExtentTestManager.startTest(method.getName(), "TC_10_Edit_And_View_Qualifications");
+		ExtentTestManager.getTest().log(LogStatus.INFO, "10_Edit_And_View_Qualifications - Step 01: Login in to the system with Admin role");
+		dashBoardPage = loginPage.loginToTheSystem(driver, "txtUsername","txtPassword","btnLogin",adminUsername,adminPassword);
+		
+		ExtentTestManager.getTest().log(LogStatus.INFO, "10_Edit_And_View_Qualifications - Step 02: Open Menu Header: 'PIM' and Sub Menu: 'Employee List'");
+		dashBoardPage.clickOnMenuAndSubMenuByName(driver,"PIM","Employee List");
+		empListPage = PageGeneratorManager.getEmpListPage(driver);
+		
+		ExtentTestManager.getTest().log(LogStatus.INFO, "10_Edit_And_View_Qualifications - Step 03: Input to Employee Name: "+  firstName);
+		empListPage.isJQueryAjaxLoadedSuccess(driver);
+		empListPage.inputTextBoxByID(driver, editFullName, "empsearch_employee_name_empName");
+		empListPage.isJQueryAjaxLoadedSuccess(driver);
+		
+		ExtentTestManager.getTest().log(LogStatus.INFO, "10_Edit_And_View_Qualifications - Step 04: Click to 'Search' Button");
+		empListPage.clickOnButtonByID(driver, "searchBtn");
+		
+		ExtentTestManager.getTest().log(LogStatus.INFO, "10_Edit_And_View_Qualifications - Step 05: Click to Employee's name in table");
+		empListPage.clickValueByTableIdAndColumnNameAndRowIndex(driver, "resultTable", "First (& Middle) Name", "1");
+		empInfoPage = PageGeneratorManager.getEmpInfoPage(driver);
+		
+		ExtentTestManager.getTest().log(LogStatus.INFO, "10_Edit_And_View_Qualifications - Step 06: Open Qualifications menu at My info Menu");
+		empInfoPage.openInfoMenuByName("Qualifications");
+		
+		ExtentTestManager.getTest().log(LogStatus.INFO, "10_Edit_And_View_Qualifications - Step 07: Click on Add button");
+		empInfoPage.clickOnButtonByID(driver, "addWorkExperience");
+		
+		ExtentTestManager.getTest().log(LogStatus.INFO, "10_Edit_And_View_Qualifications - Step 09: Input Company is: "+companyQuan);
+		empInfoPage.inputTextBoxByID(driver, companyQuan, "experience_employer");
+				
+		ExtentTestManager.getTest().log(LogStatus.INFO, "10_Edit_And_View_Qualifications - Step 12: Input Job Title is: " + jobtitleQuan);
+		empInfoPage.inputTextBoxByID(driver, jobtitleQuan, "experience_jobtitle");
+		
+		ExtentTestManager.getTest().log(LogStatus.INFO, "10_Edit_And_View_Qualifications - Step 13: Click on Save button");
+		empInfoPage.clickOnButtonByID(driver, "btnWorkExpSave");
+		
+		ExtentTestManager.getTest().log(LogStatus.INFO, "10_Edit_And_View_Qualifications - Step 15: Verify success message upload is displayed");
+		verifyTrue(empInfoPage.isSuccessMessageDisplayed(driver,"Successfully Saved"));
+		
+		ExtentTestManager.getTest().log(LogStatus.INFO, "10_Edit_And_View_Qualifications - Step 14: Logout from the system");
+		loginPage = empInfoPage.logoutFromTheSystem(driver, "Logout");
+		
+		ExtentTestManager.getTest().log(LogStatus.INFO, "10_Edit_And_View_Qualifications - Step 15: Login with user name: "+empUserName +" and password "+empPassword);
+		dashBoardPage = loginPage.loginToTheSystem(driver, "txtUsername","txtPassword","btnLogin",empUserName,empPassword);
+		
+		ExtentTestManager.getTest().log(LogStatus.INFO, "10_Edit_And_View_Qualifications - Step 16: Open Menu Header: 'My Info'");
+		dashBoardPage.clickOnMenuByName(driver, "My Info");
+		empInfoPage = PageGeneratorManager.getEmpInfoPage(driver);
+		
+		ExtentTestManager.getTest().log(LogStatus.INFO, "10_Edit_And_View_Qualifications - Step 17: Open Job menu at My info Menu");
+		empInfoPage.openInfoMenuByName("Qualifications");
+		
+		ExtentTestManager.getTest().log(LogStatus.INFO, "10_Edit_And_View_Qualifications - Step 18: Verify Company in Table: "+ companyQuan);
+		verifyEquals(empInfoPage.getValueByPreTableIdAndColumnNameAndRowIndex( driver, "actionWorkExperience", "Company", "1"), companyQuan);
+		
+		ExtentTestManager.getTest().log(LogStatus.INFO, "10_Edit_And_View_Qualifications - Step 19: Verify Job Title in Table: " + jobtitleQuan);
+		verifyEquals(empInfoPage.getValueByPreTableIdAndColumnNameAndRowIndex(driver, "actionWorkExperience", "Job Title", "1"), jobtitleQuan);
+		
+		ExtentTestManager.getTest().log(LogStatus.INFO, "10_Edit_And_View_Qualifications - Step 22: Logout from the system");
+		loginPage = empInfoPage.logoutFromTheSystem(driver, "Logout");
+		ExtentTestManager.endTest();
+	}
+	
+	@Test
+	public void TC_11_Search_Multi_Params(Method method) {	
+		ExtentTestManager.startTest(method.getName(), "TC_11_Search_Multi_Params");
+		ExtentTestManager.getTest().log(LogStatus.INFO, "11_Search_Multi_Params - Step 01: Login in to the system with Admin role");
+		dashBoardPage = loginPage.loginToTheSystem(driver, "txtUsername","txtPassword","btnLogin",adminUsername,adminPassword);
+		
+		ExtentTestManager.getTest().log(LogStatus.INFO, "11_Search_Multi_Params - Step 02: Open Menu Header: 'PIM' and Sub Menu: 'Employee List'");
+		dashBoardPage.clickOnMenuAndSubMenuByName(driver,"PIM","Employee List");
+		empListPage = PageGeneratorManager.getEmpListPage(driver);
+		
+		ExtentTestManager.getTest().log(LogStatus.INFO, "11_Search_Multi_Params - Step 03: Input to Employee Name: "+  editFullName);
+		empListPage.isJQueryAjaxLoadedSuccess(driver);
+		empListPage.inputTextBoxByID(driver, editFullName, "empsearch_employee_name_empName");
+		empListPage.isJQueryAjaxLoadedSuccess(driver);
+		
+		ExtentTestManager.getTest().log(LogStatus.INFO, "11_Search_Multi_Params - Step 04: Input to Employee ID: "+  employeeID);
+		empListPage.inputTextBoxByID(driver, employeeID, "empsearch_id");
+		
+		ExtentTestManager.getTest().log(LogStatus.INFO, "11_Search_Multi_Params - Step 05: Input to Employment Status ID: Freelance");
+		empListPage.selectDropdownByIDAndText(driver,  "empsearch_employee_status", "Freelance");
+		
+		ExtentTestManager.getTest().log(LogStatus.INFO, "11_Search_Multi_Params - Step 06: Input to Job Title: Account Assistant");
+		empListPage.selectDropdownByIDAndText(driver,  "empsearch_job_title", "Account Assistant");
+		
+		ExtentTestManager.getTest().log(LogStatus.INFO, "11_Search_Multi_Params - Step 07: Input to Sub Unit: Engineering");
+		empListPage.selectDropdownByIDAndText(driver,  "empsearch_sub_unit", "Engineering");
+		
+		ExtentTestManager.getTest().log(LogStatus.INFO, "11_Search_Multi_Params - Step 08: Click to 'Search' Button");
+		empListPage.clickOnButtonByID(driver, "searchBtn");
+		
+		ExtentTestManager.getTest().log(LogStatus.INFO, "11_Search_Multi_Params - Step 09: Verify First Name in Table: " + editFirstName);
+		verifyEquals(empListPage.getValueByTableIdAndColumnNameAndRowIndex(driver, "resultTable", "First (& Middle) Name", "1"), editFirstName);
+	
+		ExtentTestManager.getTest().log(LogStatus.INFO, "11_Search_Multi_Params - Step 10: Verify Last Name in Table: "+ editLastName);
+		verifyEquals(empListPage.getValueByTableIdAndColumnNameAndRowIndex(driver, "resultTable", "Last Name", "1"), editLastName);
+		
+		ExtentTestManager.getTest().log(LogStatus.INFO, "11_Search_Multi_Params - Step 11: Verify Employee ID in Table: "+ employeeID);
+		verifyEquals(empListPage.getValueByTableIdAndColumnNameAndRowIndex(driver, "resultTable", "Id", "1"), employeeID);
+		
+		ExtentTestManager.getTest().log(LogStatus.INFO, "11_Search_Multi_Params - Step 12: Verify Employee ID in Table: Account Assistant");
+		verifyEquals(empListPage.getValueByTableIdAndColumnNameAndRowIndex(driver, "resultTable", "Job Title", "1"), "Account Assistant");
+		
+		ExtentTestManager.getTest().log(LogStatus.INFO, "11_Search_Multi_Params - Step 13: Verify Employee ID in Table: Freelance");
+		verifyEquals(empListPage.getValueByTableIdAndColumnNameAndRowIndex(driver, "resultTable", "Employment Status", "1"), "Freelance");
+		
+		ExtentTestManager.getTest().log(LogStatus.INFO, "11_Search_Multi_Params - Step 13: Verify Employee ID in Table: Engineering");
+		verifyEquals(empListPage.getValueByTableIdAndColumnNameAndRowIndex(driver, "resultTable", "Sub Unit", "1"), "Engineering");
 		
 		ExtentTestManager.endTest();
 	}
-		
 	@AfterClass
 	public void afterClass() {
 		closeBrowserAndDriver();

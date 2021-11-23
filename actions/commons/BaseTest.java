@@ -16,6 +16,8 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
 import org.testng.Reporter;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
+
 public class BaseTest {
 	private WebDriver driver;
 	private String projectPath = System.getProperty("user.dir");
@@ -34,16 +36,19 @@ public class BaseTest {
 		
 		BROWSER browser = BROWSER.valueOf(browserName.toUpperCase());
 		if (browser == BROWSER.CHROME) {
-			System.setProperty("webdriver.chrome.driver",projectPath + getFlash("browserDrivers") + "chromedriver.exe");
+			//System.setProperty("webdriver.chrome.driver",projectPath + getFlash("browserDrivers") + "chromedriver.exe");
+			WebDriverManager.chromedriver().setup();
 			ChromeOptions options = new ChromeOptions();
 			options.setExperimentalOption("useAutomationExtension", false);
 			options.setExperimentalOption("excludeSwitches",Collections.singletonList("enable-automation"));
 			driver = new ChromeDriver(options);
 		} else if (browser == BROWSER.EDGE) {
-			System.setProperty("webdriver.edge.driver", projectPath + getFlash("browserDrivers") + "msedgedriver.exe");
+			//System.setProperty("webdriver.edge.driver", projectPath + getFlash("browserDrivers") + "msedgedriver.exe");
+			WebDriverManager.edgedriver().setup();
 			driver = new EdgeDriver();
 		} else if (browser == BROWSER.FIREFOX) {
-			System.setProperty("webdriver.gecko.driver", projectPath + getFlash("browserDrivers") + "geckodriver.exe");
+			//System.setProperty("webdriver.gecko.driver", projectPath + getFlash("browserDrivers") + "geckodriver.exe");
+			WebDriverManager.firefoxdriver().setup();
 			driver = new FirefoxDriver();
 		} else {
 			throw new RuntimeException("plesae input correct browser name");

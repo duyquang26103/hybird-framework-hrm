@@ -28,5 +28,6 @@
 	<classpathentry kind="lib" path="libFaker/generex-1.0.2.jar"/>
 	<classpathentry kind="lib" path="libFaker/javafaker-1.0.1.jar"/>
 	<classpathentry kind="lib" path="libFaker/snakeyaml-1.23.jar"/>
+	<classpathentry kind="lib" path="libManager/webdrivermanager-4.4.3.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

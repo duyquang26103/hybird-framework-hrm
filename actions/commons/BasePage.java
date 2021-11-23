@@ -127,7 +127,7 @@ public class BasePage {
 		allCookies = driver.manage().getCookies();
 	}
 
-	private WebElement getWebElement(WebDriver driver, String xpathlocator) {
+	protected WebElement getWebElement(WebDriver driver, String xpathlocator) {
 		return driver.findElement(getXpath(xpathlocator));
 	}
 
@@ -135,7 +135,7 @@ public class BasePage {
 		return driver.findElements(getXpath(xpathlocator));
 	}
 
-	private By getXpath(String xpathlocator) {
+	protected By getXpath(String xpathlocator) {
 		return By.xpath(xpathlocator);
 	}
 
@@ -174,6 +174,11 @@ public class BasePage {
 
 	public void selectItemInDefaultDropdown(WebDriver driver, String xpathlocator, String textItem) {
 		Select select = new Select(getWebElement(driver, xpathlocator));
+		select.selectByValue(textItem);
+	}
+	
+	public void selectItemInDefaultDropdown(WebDriver driver, String xpathlocator, String textItem, String...params) {
+		Select select = new Select(getWebElement(driver, getDymamicLocator(xpathlocator, params)));
 		select.selectByValue(textItem);
 	}
 
@@ -223,6 +228,7 @@ public class BasePage {
 			}
 		}
 	}
+	
 
 	public String getAttributeValue(WebDriver driver, String xpathlocator, String attributeName) {
 		return getWebElement(driver, xpathlocator).getAttribute(attributeName);
@@ -531,9 +537,14 @@ public class BasePage {
 		clickToElement(driver, BasePageUI.RADIO_BUTTON_BY_ID, buttonName);
 	}
 
-	public void selectDropdownByIDAndText(WebDriver driver, String dropDownID, String value) {
+	public void selectDropdownByIDAndText(WebDriver driver, String dropDownID, String textItem) {
 		waitForElementVisible(driver, BasePageUI.SELECT_DROPDOWN_BY_ID, dropDownID);
-		selectItemInDefaultDropdownByText(driver, BasePageUI.SELECT_DROPDOWN_BY_ID, value, dropDownID);
+		selectItemInDefaultDropdownByText(driver, BasePageUI.SELECT_DROPDOWN_BY_ID, textItem, dropDownID);
+	}
+	
+	public void selectDropdownByIDAndValue(WebDriver driver, String dropDownID, String value) {
+		waitForElementVisible(driver, BasePageUI.SELECT_DROPDOWN_BY_ID, dropDownID);
+		selectItemInCustomDropdown(driver, BasePageUI.SELECT_DROPDOWN_BY_ID, value, dropDownID);
 	}
 	
 	public boolean isSuccessMessageDisplayed(WebDriver driver, String textName) {
@@ -583,7 +594,7 @@ public class BasePage {
 	
 	public String getValueByTableIdAndColumnNameAndRowIndexNoHeader(WebDriver driver, String tableID, String headerName, String rowIndex) {
 		waitForElementVisible(driver, BasePageUI.TABLE_BY_ID_AND_ROW_HEADER_BY_NAME, tableID, headerName);
-		int columnIndex = getElementSize(driver, BasePageUI.TABLE_BY_ID_AND_ROW_HEADER_BY_NAME, tableID, headerName);
+		int columnIndex = getElementSize(driver, BasePageUI.TABLE_BY_ID_AND_ROW_HEADER_BY_NAME, tableID, headerName) + 1;
 		return getElementText(driver, BasePageUI.TABLE_BY_ID_AND_ROW_BY_INDEX_COLUMN_BY_INDEX, tableID,rowIndex,String.valueOf(columnIndex));
 	}
 	
@@ -633,9 +644,9 @@ public class BasePage {
 		return false;
 	}
 
-	private long shortTimeout = GlobalConstants.SHORT_TIME_OUT;
+	protected long shortTimeout = GlobalConstants.SHORT_TIME_OUT;
 
-	private long longTimeout = GlobalConstants.LONG_TIME_OUT;
+	protected long longTimeout = GlobalConstants.LONG_TIME_OUT;
 
 	public void sleepInSecond(long timeoutInSecond) {
 		try {
